@@ -2,9 +2,14 @@ import React, { Fragment } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
+function guard(n) {
+  if (isNaN(n)) return 0;
+  return n
+}
+
 function getNewPathName() {
   const urlParams = window.location.pathname.split('/');
-  urlParams[urlParams.length - 1] = +urlParams[urlParams.length - 1] + 1;
+  urlParams[urlParams.length - 1] = guard(+urlParams[urlParams.length - 1]) + 1;
   return urlParams.join('/');
 }
 
@@ -27,7 +32,7 @@ function Container(props) {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/recursive-iframes">
       <Route exact path="/" component={Container}/>
       <Route path="/:count" component={Container}/>
     </Router>
